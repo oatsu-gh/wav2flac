@@ -90,7 +90,7 @@ def main():
         print('WAVファイルをごみ箱へ送ります。')
         # 用済みのWAVファイルをゴミ箱に送る
         for wav_file in wav_files:
-            send2trash(wav_file)
+            send2trash(tqdm(wav_file))
         print('WAVファイルをゴミ箱に送りました。')
     else:
         print('WAVファイルとFLACファイルの数が一致しません。')
