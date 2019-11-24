@@ -99,8 +99,8 @@ def main():
     # おわり
     print('--------------------')
     print('処理を終えました。')
-    print('WAV ファイルの合計サイズ: {} MB'.format(wav_totalsize // 1024))
-    print('FLACファイルの合計サイズ: {} MB'.format(flac_totalsize // 1024))
+    print('WAV ファイルの合計サイズ: {} MB'.format(wav_totalsize // 1048576))
+    print('FLACファイルの合計サイズ: {} MB'.format(flac_totalsize // 1048576))
     input('Press enter to exit.')
 
 
