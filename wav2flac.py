@@ -10,16 +10,18 @@ from glob import glob
 from os.path import getsize
 
 # import ffmpeg
+from tqdm import tqdm
 from pydub import AudioSegment
 from send2trash import send2trash
+from pysnooper import snoop
 
-
+# @snoop()
 def glob_audiofile(dir_path, audio_format):
     """
     フォルダ内の指定フォーマットの音声ファイル一覧をフルパス取得
     """
     # ファイルを再帰的に取得
-    audio_files = glob('{}/**/*.{}'.format(dir_path, audio_format))
+    audio_files = glob('{}/*.{}'.format(dir_path, audio_format))
     # ファイルサイズを取得
     audio_sizes = list(map(getsize, audio_files))
     # 総データサイズを取得
@@ -33,7 +35,7 @@ def wav2flac(wav_files):
     WAVファイルをFLACエンコード
     この際トラック情報をコピーする(未実装)
     """
-    for wav_file in wav_files:
+    for wav_file in tqdm(wav_files):
         # ファイルを読み取り
         f = AudioSegment.from_file(wav_file)
         # flac用にファイル名を変更
@@ -50,16 +52,16 @@ def check_files(wav_files, flac_files):
         return True
     return False
 
-
+@snoop()
 def main():
     """
     全体の処理を実行
     """
     # 処理対象フォルダを決定
     try:
-        dir_path = sys.argv[1]
+        dir_path = sys.argv[1].replace('"', '')
     except IndexError:
-        dir_path = input('フォルダを指定してください\n>>> ')
+        dir_path = input('フォルダを指定してください\n>>> ').replace('"', '')
     # フォルダ指定がない場合はカレントフォルダで処理
     if dir_path == (''):
         dir_path = '.'
