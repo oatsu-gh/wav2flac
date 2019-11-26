@@ -1,0 +1,5 @@
+# reqirements.txt
+pprint
+pydub
+send2trash
+tqdm
