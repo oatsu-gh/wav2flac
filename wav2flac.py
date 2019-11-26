@@ -13,9 +13,9 @@ from os.path import getsize
 from tqdm import tqdm
 from pydub import AudioSegment
 from send2trash import send2trash
-from pysnooper import snoop
+# from pysnooper import snoop
 
-# @snoop()
+
 def glob_audiofile(dir_path, audio_format):
     """
     フォルダ内の指定フォーマットの音声ファイル一覧をフルパス取得
@@ -52,7 +52,7 @@ def check_files(wav_files, flac_files):
         return True
     return False
 
-@snoop()
+# @snoop()
 def main():
     """
     全体の処理を実行
