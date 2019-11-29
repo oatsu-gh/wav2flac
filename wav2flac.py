@@ -23,7 +23,7 @@ def glob_audiofile(dir_path, audio_format):
     フォルダ内の指定フォーマットの音声ファイル一覧をフルパス取得
     """
     # ファイルを再帰的に取得
-    audio_files = glob('{}/*.{}'.format(dir_path, audio_format))
+    audio_files = glob('{}/**/*.{}'.format(dir_path, audio_format), recursive=True)
     # ファイルサイズを取得
     audio_sizes = list(map(os.path.getsize, audio_files))
     # 総データサイズを取得
@@ -40,10 +40,11 @@ def wav2flac(wav_files):
     # flac.exeを利用
     if os.path.isfile('./flac.exe'):
         flac_arg = ' '.join(wav_files)
+        print('.\\flac.exe -f {}'.format(flac_arg))
         subprocess.call('.\\flac.exe -f {}'.format(flac_arg, shell=True))  # ファイルを変換（上書き）
         subprocess.call('.\\flac.exe -t -F {}'.format(flac_arg, shell=True))  # 破損検査・修復
 
-        # ffmpegを利用
+    # ffmpegを利用
     elif os.path.isfile('./ffmpeg.exe'):
         for wav_file in tqdm(wav_files):
             # ファイルを読み取り
@@ -54,7 +55,7 @@ def wav2flac(wav_files):
             f.export(flac_file, format='flac')
 
     else:
-        print('ffmpeg.exeまたはflac.exeをwavfile.pyと同じ階層に用意してください。')
+        print('ERROR: ffmpeg.exeまたはflac.exeをwavfile.pyと同じ階層に用意してください。')
 
 
 def check_files(wav_files, flac_files):
