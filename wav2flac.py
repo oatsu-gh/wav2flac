@@ -37,13 +37,13 @@ def wav2flac(wav_files):
     WAVファイルをFLACエンコード
     ffmpeg.exeかflac.exeが必要
     """
+
     # flac.exeを利用
     if os.path.isfile('./flac.exe'):
-        flac_arg = ' '.join(wav_files)
-        print('.\\flac.exe -f {}'.format(flac_arg))
-        subprocess.call('.\\flac.exe -f {}'.format(flac_arg, shell=True))  # ファイルを変換（上書き）
-        subprocess.call('.\\flac.exe -t -F {}'.format(flac_arg, shell=True))  # 破損検査・修復
-
+        flac_arg = ' '.join([f'"{path}"' for path in wav_files])
+        print('flac.exe -f {}'.format(flac_arg))
+        subprocess.call('flac.exe -f {}'.format(flac_arg, shell=True))  # ファイルを変換（上書き）
+        # subprocess.call('flac.exe -t -F {}'.format(flac_arg, shell=True))  # 破損検査・修復
     # ffmpegを利用
     elif os.path.isfile('./ffmpeg.exe'):
         for wav_file in tqdm(wav_files):
@@ -66,9 +66,8 @@ def check_files(wav_files, flac_files):
         return True
     return False
 
+
 # @snoop()
-
-
 def main():
     """
     全体の処理を実行
